@@ -10,6 +10,7 @@ describe UserProfile do
 
     before do
       allow_any_instance_of(UserProfile).to receive(:gets).and_return("James","Dix")
+      allow(network).to receive(:all_users).and_return({:"Elon Musk" => elon_profile })
     end
 
     it "should have a friends list of 0" do
