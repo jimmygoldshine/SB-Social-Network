@@ -22,4 +22,13 @@ describe SocialNetwork do
 
   end
 
+  describe 'New Members' do
+
+    it "should add new members to all_users" do
+      network.sign_up
+      expect(network.all_users.length).to eq(6)
+    end
+
+  end
+
 end
