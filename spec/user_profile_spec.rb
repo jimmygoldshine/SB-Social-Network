@@ -5,6 +5,7 @@ describe UserProfile do
   let(:network) {double(:network)}
   let(:profile) {described_class.new(network)}
   let(:elon_profile) {double(:elon_profile)}
+  let(:message) {double(:message)}
 
   describe "New profile" do
 
@@ -39,6 +40,32 @@ describe UserProfile do
       profile.add_friend
       expect{profile.add_friend}.to raise_error("No users found with that name. Please try again")
     end
+  end
+
+  describe "Any unread messages?" do
+
+    before do
+      allow_any_instance_of(UserProfile).to receive(:gets).and_return("James","Dix")
+      allow(network).to receive(:all_users).and_return({:"Elon Musk" => elon_profile })
+    end
+
+    it "should output 0 new messages" do
+      expect{profile.check_messages}.to output("First Name: \nLast Name: \nYou have 0 new messages\n").to_stdout
+    end
+
+    it "should output 1 new messages" do
+      profile.instance_variable_set(:@unread_messages, [message])
+      allow(message).to receive(:read).and_return("test message")
+      expect{profile.check_messages}.to output("You have 1 new messages \ntest message \n\n").to_stdout
+    end
+
+    it "should output 0 new messages after all read" do
+      profile.instance_variable_set(:@unread_messages, [message])
+      allow(message).to receive(:read).and_return("test message")
+      profile.check_messages
+      expect{profile.check_messages}.to output("You have 0 new messages\n").to_stdout
+    end
+
   end
 
 end

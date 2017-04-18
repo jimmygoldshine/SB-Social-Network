@@ -8,7 +8,7 @@ describe Message do
 
   before do
     allow(my_profile).to receive(:name).and_return("James Dix")
-    allow(elon_profile).to receive(:messages).and_return([])
+    allow(elon_profile).to receive(:unread_messages).and_return([])
     allow(my_profile).to receive(:friends).and_return(({ :"Elon Musk" => elon_profile }))
   end
 
@@ -32,13 +32,13 @@ describe Message do
   it "should send a friend a message to their friends messages" do
     allow_any_instance_of(Message).to receive(:gets).and_return("Elon Musk", "Hi Elon - I hope you're well!?")
     message.send
-    expect(elon_profile.messages).to eq([message])
+    expect(elon_profile.unread_messages).to eq([message])
   end
 
   it "should allow a friend to read a message" do
     allow_any_instance_of(Message).to receive(:gets).and_return("Elon Musk", "Hi Elon - I hope you're well!?")
     message.send
-    expect(elon_profile.messages[0].body).to eq("Hi Elon - I hope you're well!?")
+    expect(elon_profile.unread_messages[0].body).to eq("Hi Elon - I hope you're well!?")
   end
 
 end

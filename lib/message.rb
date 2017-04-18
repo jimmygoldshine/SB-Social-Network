@@ -17,7 +17,7 @@ class Message
       raise "No friends found with that name. Please try again"
     end
     @body = body
-    @sender_profile.friends[@to.to_sym].messages << self
+    @sender_profile.friends[@to.to_sym].unread_messages << self
     puts "Message sent to #{@to}"
   end
 
