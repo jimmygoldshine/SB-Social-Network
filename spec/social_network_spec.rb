@@ -8,6 +8,7 @@ describe SocialNetwork do
 
   before do
     allow(user_profile_class).to receive(:new).and_return(user_profile)
+    allow(user_profile).to receive(:name).and_return("James Dix")
   end
 
   describe 'Founding Members' do
