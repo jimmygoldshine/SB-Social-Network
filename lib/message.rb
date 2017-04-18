@@ -11,19 +11,20 @@ class Message
   end
 
   def send
-    puts "Name of recipient: "
+    puts "To: "
     @to ||= gets.chomp
     if !(@sender_profile.friends[@to.to_sym])
-      raise "No friends found with that name. Please try again"
+      puts "No friends found with the name: #{@to}. Please try again"
+      send
     end
     @body = body
     @sender_profile.friends[@to.to_sym].unread_messages << self
-    puts "Message sent to #{@to}"
+    puts "\n\n  Your message was sent to #{@to} \n\n"
   end
 
   def read
-    puts "#{@time} - #{@from}:"
-    puts "#{@body}"
+    puts "\nFrom: #{@from} at #{Time.now}:"
+    puts "Message: #{@body}"
   end
 
   def body

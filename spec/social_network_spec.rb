@@ -2,12 +2,13 @@ require 'spec_helper'
 
 describe SocialNetwork do
 
+  let(:network) {described_class.new(user_profile_class, message_class)}
   let(:user_profile_class) {double(:user_profile_class)}
-  let(:network) {described_class.new(user_profile_class)}
+  let(:message_class) {double(:message_class)}
   let(:user_profile) { double(:user_profile) }
 
   before do
-    allow(user_profile_class).to receive(:new).with(network).and_return(user_profile)
+    allow(user_profile_class).to receive(:new).with(network, message_class).and_return(user_profile)
     allow(user_profile).to receive(:name).and_return("James Dix")
   end
 

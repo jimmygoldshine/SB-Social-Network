@@ -3,7 +3,8 @@ require 'spec_helper'
 describe UserProfile do
 
   let(:network) {double(:network)}
-  let(:profile) {described_class.new(network)}
+  let(:message_class) {double(:network_class)}
+  let(:profile) {described_class.new(network, message_class)}
   let(:elon_profile) {double(:elon_profile)}
   let(:message) {double(:message)}
 
@@ -50,7 +51,8 @@ describe UserProfile do
     end
 
     it "should output 0 new messages" do
-      expect{profile.check_messages}.to output("First Name: \nLast Name: \nYou have 0 new messages\n").to_stdout
+      profile.check_messages
+      expect{profile.check_messages}.to output("You have 0 new messages\n").to_stdout
     end
 
     it "should output 1 new messages" do
