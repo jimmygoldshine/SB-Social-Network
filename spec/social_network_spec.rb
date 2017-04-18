@@ -7,29 +7,18 @@ describe SocialNetwork do
   let(:user_profile) { double(:user_profile) }
 
   before do
-    allow(user_profile_class).to receive(:new).and_return(user_profile)
+    allow(user_profile_class).to receive(:new).with(network).and_return(user_profile)
     allow(user_profile).to receive(:name).and_return("James Dix")
   end
 
-  describe 'Founding Members' do
-
-    it "should have five users created upon initialization" do
-      expect(network.all_users.length).to eq(5)
-    end
-
-    it "should have a profile associated with their names" do
-      expect(network.all_users[:"Elon Musk"]).to be(user_profile)
-    end
-
+  it "should add new members to all_users" do
+    network.sign_up
+    expect(network.all_users.length).to eq(1)
   end
 
-  describe 'New Members' do
-
-    it "should add new members to all_users" do
-      network.sign_up
-      expect(network.all_users.length).to eq(6)
-    end
-
+  it "should have a profile associated with a name" do
+    network.sign_up
+    expect(network.all_users[:"James Dix"]).to be(user_profile)
   end
 
 end

@@ -6,6 +6,11 @@ class UserProfile < SocialNetwork
     @name ||= get_name
     @friends = {}
     @all_users = network.all_users
+    @messages = []
+  end
+
+  def messages
+    @messages
   end
 
   def get_name

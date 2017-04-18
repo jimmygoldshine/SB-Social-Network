@@ -1,6 +1,6 @@
 class Message
 
-  attr_reader :to, :from, :body, :time
+  attr_reader :to, :from, :body, :time, :sender_profile
 
   def initialize(sender_profile)
     @to
@@ -17,6 +17,13 @@ class Message
       raise "No friends found with that name. Please try again"
     end
     @body = body
+    @sender_profile.friends[@to.to_sym].messages << self
+    puts "Message sent to #{@to}"
+  end
+
+  def read
+    puts "#{@time} - #{@from}:"
+    puts "#{@body}"
   end
 
   def body
