@@ -1,6 +1,6 @@
 class Message
 
-  attr_reader :to, :from, :body, :time, :sender_profile
+  attr_reader :to, :from, :body, :time
 
   def initialize(sender_profile)
     @to

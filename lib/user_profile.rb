@@ -19,7 +19,7 @@ class UserProfile
       @friends[friends_name.to_sym] = friends_profile
       puts "\nWe successfully found #{friends_name}! You are now friends - go say hi! \n"
     else
-      puts "No users found with that name. Please try again"
+      puts "No users found with that name. Are you sure they have a profile?!"
       self.add_friend
     end
   end
@@ -50,7 +50,7 @@ class UserProfile
   end
 
   def set_name
-    puts "\nWelcome to your new social network! To sign up we'll need a few details... \n"
+    puts "\nWelcome to the SB-Social-Network! To sign up we'll need a few details... \n"
     puts "First Name: "
     first_name = gets.chomp
     puts "Last Name: "
