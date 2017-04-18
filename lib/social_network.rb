@@ -11,7 +11,7 @@ class SocialNetwork
 
   def sign_up
     profile = @user_profile_class.new
-    @all_users[:test] = @user_profile_class.new
+    @all_users[:test] = profile
   end
 
 end
