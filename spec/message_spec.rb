@@ -18,11 +18,6 @@ describe Message do
     expect(message.to).to eq("Elon Musk")
   end
 
-  it "should throw an error if user is not on your friends list" do
-    allow_any_instance_of(Message).to receive(:gets).and_return("Barry White")
-    expect{message.send}.to raise_error("No friends found with that name. Please try again")
-  end
-
   it "should allow a user to type a message to their friend in the body" do
     allow_any_instance_of(Message).to receive(:gets).and_return("Elon Musk", "Hi Elon - I hope you're well!?")
     message.send

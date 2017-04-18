@@ -37,10 +37,6 @@ describe UserProfile do
       expect(profile.friends).to eq({:"Elon Musk" => elon_profile})
     end
 
-    it "should raise an error if no users are found" do
-      profile.add_friend
-      expect{profile.add_friend}.to raise_error("No users found with that name. Please try again")
-    end
   end
 
   describe "Any unread messages?" do
@@ -52,20 +48,20 @@ describe UserProfile do
 
     it "should output 0 new messages" do
       profile.check_messages
-      expect{profile.check_messages}.to output("You have 0 new messages\n").to_stdout
+      expect{profile.check_messages}.to output("\n James Dix, you have 0 new messages\n").to_stdout
     end
 
     it "should output 1 new messages" do
       profile.instance_variable_set(:@unread_messages, [message])
       allow(message).to receive(:read).and_return("test message")
-      expect{profile.check_messages}.to output("You have 1 new messages \ntest message \n\n").to_stdout
+      expect{profile.check_messages}.to output("\nJames Dix, you have 1 new message: \ntest message \n\n").to_stdout
     end
 
     it "should output 0 new messages after all read" do
       profile.instance_variable_set(:@unread_messages, [message])
       allow(message).to receive(:read).and_return("test message")
       profile.check_messages
-      expect{profile.check_messages}.to output("You have 0 new messages\n").to_stdout
+      expect{profile.check_messages}.to output("\n James Dix, you have 0 new messages\n").to_stdout
     end
 
   end
