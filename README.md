@@ -3,7 +3,7 @@ A half-day attempt at a Social Network, in Ruby. For the purposes of demonstrati
 
 This social network focuses on the ability to:
 1) Create profiles.
-2) Add friends (who also have created a profiles).
+2) Add friends (who also have created a profile).
 3) Send messages between one another.
 
 ### To Run
