@@ -9,7 +9,7 @@ This social network focuses on the ability to:
 ### To Run
 * Fork and clone this repo. Once in the SB-Social-Network folder...
 * Run ```$ bundle``` from the terminal to install gems.
-* Use the command ```$ ruby social_network.rb``` to boot up the walkthrough.
+* Use the command ```$ ruby social_network_walkthrough.rb``` to boot up the walkthrough.
 * Use the CLI to input user's names and to receive feedback from the application.
 
 ### Focus

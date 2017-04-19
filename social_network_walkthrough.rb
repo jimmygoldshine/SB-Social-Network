@@ -2,7 +2,7 @@ require './lib/social_network.rb'
 require './lib/user_profile.rb'
 require './lib/message.rb'
 
-def social_network_tutorial
+def social_network_walkthrough
   network = SocialNetwork.new(UserProfile, Message)
   puts "\n  ***This is the walkthrough for the SB-Social-Network*** \n"
   profile1 = network.sign_up
@@ -19,4 +19,4 @@ def social_network_tutorial
   puts "\n  ***That sums up this command line walkthrough!*** \n"
 end
 
-social_network_tutorial
+social_network_walkthrough
