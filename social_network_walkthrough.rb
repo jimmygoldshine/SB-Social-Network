@@ -16,7 +16,7 @@ def social_network_walkthrough
   profile1.send_message
   puts "\n  ***Let's switch into #{profile2.name}'s profile and check their messages!*** \n"
   profile2.check_messages
-  puts "\n  ***Now that #{profile2.name} has read his unread messages these are moved from the unread messages box. When Leroy checks again:*** \n"
+  puts "\n  ***Now that #{profile2.name} has read his unread messages these are moved from the unread messages box. When #{profile2.name} checks again:*** \n"
   profile2.check_messages
   puts "\n  ***That sums up this command line walkthrough!*** \n"
 end
