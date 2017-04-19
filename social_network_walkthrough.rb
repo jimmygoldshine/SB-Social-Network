@@ -8,7 +8,9 @@ def social_network_walkthrough
   profile1 = network.sign_up
   puts "\n  ***OK! Time to get another profile!*** \n"
   profile2 = network.sign_up
-  puts "\n  ***Now we have two profiles, let's connect. We'll switch into #{profile1.name} and add #{profile2.name}*** \n"
+  puts "\n  *** Let's check out how many users are now on the SB-Social-Network*** \n\n"
+  network.show_all_users
+  puts "\n  ***Now that there are two profiles, let's connect them! We'll switch into #{profile1.name}'s user profile and add #{profile2.name}*** \n"
   profile1.add_friend
   puts "\n  ***Let's send a message from #{profile1.name} to #{profile2.name}!*** \n\n"
   profile1.send_message
