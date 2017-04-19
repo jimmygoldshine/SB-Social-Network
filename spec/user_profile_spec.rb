@@ -3,7 +3,7 @@ require 'spec_helper'
 describe UserProfile do
 
   let(:network) {double(:network)}
-  let(:message_class) {double(:network_class)}
+  let(:message_class) {double(:message_class)}
   let(:profile) {described_class.new(network, message_class)}
   let(:elon_profile) {double(:elon_profile)}
   let(:message) {double(:message)}
