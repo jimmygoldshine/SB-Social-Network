@@ -16,7 +16,6 @@ class UserProfile
       add_friend_to_friend_list(friend_name)
     else
       raise "No users found with that name. Are you sure they have a profile?!"
-      try_again(add_friend, another_name)
     end
   end
 
@@ -57,10 +56,6 @@ class UserProfile
 
   def user_exists?(name)
     all_users[name.to_sym]
-  end
-
-  def try_again(method, arg)
-    self.method(arg)
   end
 
   def add_friend_to_friend_list(friend_name)
