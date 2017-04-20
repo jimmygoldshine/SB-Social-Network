@@ -21,8 +21,7 @@ class UserProfile
   end
 
   def write_message(to, body)
-    message = message_class.new(self)
-    written_message = message.write(to, body)
+    written_message = create_message_with_details(to, body)
     set_draft_message(written_message)
     draft_message
   end
@@ -84,4 +83,11 @@ class UserProfile
   def no_draft_message?
     draft_message == nil
   end
+
+  def create_message_with_details(to, body)
+    message = message_class.new(self)
+    written_message = message.write(to, body)
+    written_message
+  end
+
 end
