@@ -10,6 +10,14 @@ class Message
     @time
   end
 
+  def to_whom(friend)
+    self.to = friend
+  end
+
+  def body(body_of_message)
+    @body = (body_of_message)
+  end
+
   def send
     puts "To: "
     @to ||= gets.chomp
@@ -32,4 +40,9 @@ class Message
     message = gets.chomp
     @body = message
   end
+
+  private
+
+  attr_writer :to, :body
+
 end

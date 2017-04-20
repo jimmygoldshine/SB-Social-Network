@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Message do
 
+  to = "Elon Musk"
+  body = "Happy birthday!!!"
   let(:my_profile) {double(:my_profile)}
   let(:elon_profile) {double(:elon_profile)}
   let(:message) {described_class.new(my_profile)}
@@ -13,8 +15,7 @@ describe Message do
   end
 
   it "should allow a user to form a message with a To:" do
-    allow_any_instance_of(Message).to receive(:gets).and_return("Elon Musk")
-    message.send
+    message.to_whom("Elon Musk")
     expect(message.to).to eq("Elon Musk")
   end
 

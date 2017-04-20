@@ -1,6 +1,6 @@
 class SocialNetwork
 
-  attr_reader :all_users, :user_profile_class, :message_class
+  attr_reader :all_users
 
   def initialize(user_profile_class, message_class)
     @user_profile_class = user_profile_class
@@ -22,4 +22,8 @@ class SocialNetwork
       puts "#{user_count}. #{name}"
     end
   end
+
+  private
+
+  attr_reader :user_profile_class, :message_class
 end
