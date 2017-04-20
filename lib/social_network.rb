@@ -9,7 +9,10 @@ class SocialNetwork
   end
 
   def sign_up(first_name, last_name)
-    profile = user_profile_class.new(self, message_class, first_name, last_name)
+    profile = user_profile_class.new(:network => self,
+                                     :message_class => message_class,
+                                     :first_name => first_name,
+                                     :last_name => last_name)
     user_name = profile.name
     all_users[user_name.to_sym] = profile
   end

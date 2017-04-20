@@ -9,8 +9,14 @@ describe UserProfile do
 
   let(:network) {double(:network)}
   let(:message_class) {double(:message_class)}
-  let(:my_profile) {described_class.new(network, message_class, first_name1, last_name1)}
-  let(:elon_profile) {described_class.new(network, message_class, first_name2, last_name2)}
+  let(:my_profile) {described_class.new(:network => network,
+                                        :message_class => message_class,
+                                        :first_name => first_name1,
+                                        :last_name => last_name1)}
+  let(:elon_profile) {described_class.new(:network => network,
+                                          :message_class => message_class,
+                                          :first_name => first_name2,
+                                          :last_name => last_name2)}
   let(:message) {double(:message)}
 
   before do

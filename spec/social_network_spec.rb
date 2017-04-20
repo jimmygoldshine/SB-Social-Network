@@ -10,7 +10,10 @@ describe SocialNetwork do
   last_name = "Dix"
 
   before do
-    allow(user_profile_class).to receive(:new).with(network, message_class, first_name, last_name).and_return(user_profile)
+    allow(user_profile_class).to receive(:new).with(:network => network,
+                                                    :message_class => message_class,
+                                                    :first_name => first_name,
+                                                    :last_name => last_name).and_return(user_profile)
     allow(user_profile).to receive(:name).and_return("James Dix")
   end
 

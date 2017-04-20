@@ -2,14 +2,14 @@ class UserProfile
 
   attr_reader :name, :friends, :unread_messages, :read_messages, :draft_message
 
-  def initialize(network, message_class, first_name, last_name)
-    @name = "#{first_name} #{last_name}"
+  def initialize(args)
+    @name = "#{args[:first_name]} #{args[:last_name]}"
+    @all_users = args[:network].all_users
+    @message_class = args[:message_class]
     @friends = {}
-    @all_users = network.all_users
     @unread_messages = []
     @read_messages = []
     @draft_message = nil
-    @message_class = message_class
   end
 
   def add_friend(friend_name)
