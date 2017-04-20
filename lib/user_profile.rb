@@ -30,7 +30,7 @@ class UserProfile
     if no_draft_message?
       raise "No draft message to send"
     end
-    draft_message.send
+    send_message_to_friend
     set_draft_message(nil)
   end
 
@@ -88,6 +88,10 @@ class UserProfile
     message = message_class.new(self)
     written_message = message.write(to, body)
     written_message
+  end
+
+  def send_message_to_friend
+    draft_message.send
   end
 
 end
