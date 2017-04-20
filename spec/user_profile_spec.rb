@@ -72,9 +72,13 @@ describe UserProfile do
       expect(my_profile.draft_message).to eq(message)
     end
 
+    it "should error if there is no draft message to send" do
+      expect{my_profile.send_message}.to raise_error("No draft message to send")
+    end
+
     it "should receive a message into unread_messages" do
       draft_message = my_profile.write_message(friend_name1, message_body)
-      my_profile.send_message(draft_message)
+      my_profile.send_message
       expect(elon_profile.unread_messages.count).to eq(1)
     end
 

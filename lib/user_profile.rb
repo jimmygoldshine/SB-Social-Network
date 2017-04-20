@@ -27,7 +27,10 @@ class UserProfile
     draft_message
   end
 
-  def send_message(draft_message)
+  def send_message
+    if no_draft_message?
+      raise "No draft message to send"
+    end
     draft_message.send
     set_draft_message(nil)
   end
@@ -76,5 +79,9 @@ class UserProfile
   def add_friend_to_friend_list(friend_name)
     friend_profile = all_users[friend_name.to_sym]
     friends[friend_name.to_sym] = friend_profile
+  end
+
+  def no_draft_message?
+    draft_message == nil
   end
 end
