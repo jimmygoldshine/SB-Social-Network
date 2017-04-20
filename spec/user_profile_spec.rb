@@ -4,7 +4,7 @@ describe UserProfile do
 
   let(:network) {double(:network)}
   let(:message_class) {double(:message_class)}
-  let(:profile) {described_class.new(network, message_class)}
+  let(:profile) {described_class.new(network, message_class, "James", "Dix")}
   let(:elon_profile) {double(:elon_profile)}
   let(:message) {double(:message)}
 
@@ -27,14 +27,20 @@ describe UserProfile do
 
   describe "Add a friend" do
 
+    friend_name1 = "Elon Musk"
+    friend_name2 = "Barry White"
+
     before do
-      allow_any_instance_of(UserProfile).to receive(:gets).and_return("James","Dix", "Elon Musk", "Barry White")
       allow(network).to receive(:all_users).and_return({:"Elon Musk" => elon_profile })
     end
 
     it "should allow a user to add existing users to friend list" do
-      profile.add_friend
+      profile.add_friend(friend_name1)
       expect(profile.friends).to eq({:"Elon Musk" => elon_profile})
+    end
+
+    it "should raise an error if friend_name does not correspond with an existing profile" do
+      expect{profile.add_friend(friend_name2)}.to raise_error("No users found with that name. Are you sure they have a profile?!")
     end
 
   end

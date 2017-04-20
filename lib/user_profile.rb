@@ -2,8 +2,8 @@ class UserProfile
 
   attr_reader :name, :friends, :unread_messages, :read_messages, :all_users, :message_class
 
-  def initialize(network, message_class)
-    @name = set_name
+  def initialize(network, message_class, first_name, last_name)
+    @name = "#{first_name} #{last_name}"
     @friends = {}
     @all_users = network.all_users
     @unread_messages = []
@@ -11,16 +11,13 @@ class UserProfile
     @message_class = message_class
   end
 
-  def add_friend
-    puts "\n#{name}, you would like to add a friend... what's their full name?"
-    friends_name = gets.chomp
-    if user_exists?
-      friends_profile = all_users[friends_name.to_sym]
-      friends[friends_name.to_sym] = friends_profile
-      puts "\nWe successfully found #{friends_name}! You are now friends - go say hi! \n"
+  def add_friend(friend_name)
+    if user_exists?(friend_name)
+      friend_profile = all_users[friend_name.to_sym]
+      friends[friend_name.to_sym] = friend_profile
     else
-      puts "No users found with that name. Are you sure they have a profile?!"
-      try_again(add_friend)
+      raise "No users found with that name. Are you sure they have a profile?!"
+      self.add_friend(name)
     end
   end
 
@@ -49,12 +46,7 @@ class UserProfile
     return unread_messages.length != 1 ? "s" : ""
   end
 
-  def set_name
-    puts "\nWelcome to the SB-Social-Network! To sign up we'll need a few details... \n"
-    puts "First Name: "
-    first_name = gets.chomp
-    puts "Last Name: "
-    last_name = gets.chomp
+  def set_name(first_name, last_name)
     name = "#{first_name} #{last_name}"
     puts "Thank you for signing up, #{first_name}!\n\n"
     name
@@ -64,8 +56,8 @@ class UserProfile
     unread_messages.any?
   end
 
-  def user_exists?
-    all_users[friends_name.to_sym]
+  def user_exists?(name)
+    all_users[name.to_sym]
   end
 
   def try_again(method)

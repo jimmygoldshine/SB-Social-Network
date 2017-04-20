@@ -8,8 +8,8 @@ class SocialNetwork
     @all_users = {}
   end
 
-  def sign_up
-    profile = user_profile_class.new(self, message_class)
+  def sign_up(first_name, last_name)
+    profile = user_profile_class.new(self, message_class, first_name, last_name)
     user_name = profile.name
     all_users[user_name.to_sym] = profile
   end
