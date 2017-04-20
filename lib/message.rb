@@ -1,12 +1,12 @@
 class Message
 
-  attr_reader :to, :from, :body, :time, :sender_profile
+  attr_reader :to, :from, :body, :time, :sender_friends
 
   def initialize(sender_profile)
     @to
     @body
     @from = sender_profile.name
-    @sender_profile = sender_profile
+    @sender_friends = sender_profile.friends
     @time
   end
 
@@ -46,11 +46,11 @@ class Message
   end
 
   def user_not_in_friend_list
-    !(sender_profile.friends[to.to_sym])
+    !(sender_friends[to.to_sym])
   end
 
   def send_message_to_friends_unread_messages
-    sender_profile.friends[to.to_sym].unread_messages << self
+    sender_friends[to.to_sym].unread_messages << self
   end
 
 end
