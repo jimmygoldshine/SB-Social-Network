@@ -19,9 +19,9 @@ class UserProfile
     end
   end
 
-  def send_message
+  def send_message(to, body)
     message = message_class.new(self)
-    message.send
+    message.send(to, body)
   end
 
 
