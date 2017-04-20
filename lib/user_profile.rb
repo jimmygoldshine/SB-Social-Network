@@ -13,11 +13,10 @@ class UserProfile
 
   def add_friend(friend_name)
     if user_exists?(friend_name)
-      friend_profile = all_users[friend_name.to_sym]
-      friends[friend_name.to_sym] = friend_profile
+      add_friend_to_friend_list(friend_name)
     else
       raise "No users found with that name. Are you sure they have a profile?!"
-      self.add_friend(name)
+      try_again(add_friend, another_name)
     end
   end
 
@@ -60,8 +59,12 @@ class UserProfile
     all_users[name.to_sym]
   end
 
-  def try_again(method)
-    self.method
+  def try_again(method, arg)
+    self.method(arg)
   end
 
+  def add_friend_to_friend_list(friend_name)
+    friend_profile = all_users[friend_name.to_sym]
+    friends[friend_name.to_sym] = friend_profile
+  end
 end
