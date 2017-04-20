@@ -20,7 +20,7 @@ describe Message do
     expect(message.to).to eq("Elon Musk")
   end
 
-  it "should allow a user to create a new message setting 'body'" do
+  it "should raise error if a user tries to create a new message with a non_friend" do
     expect{message.write(message_to_non_friend, message_body)}.to raise_error("No friends found with the name: Barry White. Please try again")
   end
 

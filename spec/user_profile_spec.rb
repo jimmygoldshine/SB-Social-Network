@@ -2,25 +2,29 @@ require 'spec_helper'
 
 describe UserProfile do
 
+  first_name1 = "James"
+  last_name1 = "Dix"
+  first_name2 = "Elon"
+  last_name2 = "Musk"
+
   let(:network) {double(:network)}
   let(:message_class) {double(:message_class)}
-  let(:profile) {described_class.new(network, message_class, "James", "Dix")}
-  let(:elon_profile) {double(:elon_profile)}
+  let(:my_profile) {described_class.new(network, message_class, first_name1, last_name1)}
+  let(:elon_profile) {described_class.new(network, message_class, first_name2, last_name2)}
   let(:message) {double(:message)}
+
+  before do
+    allow(network).to receive(:all_users)
+  end
 
   describe "New profile" do
 
-    before do
-      allow_any_instance_of(UserProfile).to receive(:gets).and_return("James","Dix")
-      allow(network).to receive(:all_users).and_return({:"Elon Musk" => elon_profile })
-    end
-
     it "should have a friends list of 0" do
-      expect(profile.friends.length).to eq(0)
+      expect(my_profile.friends.length).to eq(0)
     end
 
     it "should be initialized with a First Name and Last Name" do
-      expect(profile.name).to eq("James Dix")
+      expect(my_profile.name).to eq("James Dix")
     end
 
   end
@@ -35,39 +39,50 @@ describe UserProfile do
     end
 
     it "should allow a user to add existing users to friend list" do
-      profile.add_friend(friend_name1)
-      expect(profile.friends).to eq({:"Elon Musk" => elon_profile})
+      my_profile.add_friend(friend_name1)
+      expect(my_profile.friends).to eq({:"Elon Musk" => elon_profile})
     end
 
     it "should raise an error if friend_name does not correspond with an existing profile" do
-      expect{profile.add_friend(friend_name2)}.to raise_error("No users found with that name. Are you sure they have a profile?!")
+      expect{my_profile.add_friend(friend_name2)}.to raise_error("No users found with that name. Are you sure they have a profile?!")
     end
 
   end
 
-  describe "Any unread messages?" do
+  describe "Sending / Receiving Messages" do
+
+    friend_name1 = "Elon Musk"
+    friend_name2 = "Barry White"
+    message_body = "Bonjourno"
 
     before do
-      allow_any_instance_of(UserProfile).to receive(:gets).and_return("James","Dix")
       allow(network).to receive(:all_users).and_return({:"Elon Musk" => elon_profile })
+      my_profile.add_friend(friend_name1)
+      allow(message_class).to receive(:new).with(my_profile).and_return(message)
+      allow(message).to receive(:write).with(friend_name1, message_body).and_return(message)
+      allow(message).to receive(:send).and_return(elon_profile.unread_messages << message)
     end
 
-    it "should output 0 new messages" do
-      profile.check_messages
-      expect{profile.check_messages}.to output("\n James Dix, you have 0 new messages\n").to_stdout
+    it "should start with 0 new messages" do
+      expect(my_profile.unread_messages.length).to eq(0)
     end
 
-    it "should output 1 new messages" do
-      profile.instance_variable_set(:@unread_messages, [message])
-      allow(message).to receive(:read).and_return("test message")
-      expect{profile.check_messages}.to output("\nJames Dix, you have 1 new message: \ntest message \n\n").to_stdout
+    it "should create a draft message" do
+      my_profile.write_message(friend_name1, message_body)
+      expect(my_profile.draft_message).to eq(message)
+    end
+
+    it "should receive a message into unread_messages" do
+      draft_message = my_profile.write_message(friend_name1, message_body)
+      my_profile.send_message(draft_message)
+      expect(elon_profile.unread_messages.count).to eq(1)
     end
 
     it "should output 0 new messages after all read" do
-      profile.instance_variable_set(:@unread_messages, [message])
+      my_profile.instance_variable_set(:@unread_messages, [message])
       allow(message).to receive(:read).and_return("test message")
-      profile.check_messages
-      expect{profile.check_messages}.to output("\n James Dix, you have 0 new messages\n").to_stdout
+      my_profile.check_messages
+      expect{my_profile.check_messages}.to output("\n James Dix, you have 0 new messages\n").to_stdout
     end
 
   end

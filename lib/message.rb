@@ -16,6 +16,7 @@ class Message
       raise "No friends found with the name: #{to}. Please try again"
     end
     set_body(body)
+    self
   end
 
   def send

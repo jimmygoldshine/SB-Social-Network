@@ -1,6 +1,6 @@
 class UserProfile
 
-  attr_reader :name, :friends, :unread_messages, :read_messages, :all_users, :message_class
+  attr_reader :name, :friends, :unread_messages, :read_messages, :draft_message
 
   def initialize(network, message_class, first_name, last_name)
     @name = "#{first_name} #{last_name}"
@@ -8,6 +8,7 @@ class UserProfile
     @all_users = network.all_users
     @unread_messages = []
     @read_messages = []
+    @draft_message = nil
     @message_class = message_class
   end
 
@@ -19,11 +20,17 @@ class UserProfile
     end
   end
 
-  def send_message(to, body)
+  def write_message(to, body)
     message = message_class.new(self)
-    message.send(to, body)
+    written_message = message.write(to, body)
+    set_draft_message(written_message)
+    draft_message
   end
 
+  def send_message(draft_message)
+    draft_message.send
+    set_draft_message(nil)
+  end
 
   def check_messages
     if any_unread_messages?
@@ -39,6 +46,14 @@ class UserProfile
   end
 
   private
+
+  attr_reader :message_class, :all_users
+
+  attr_writer :draft_message
+
+  def set_draft_message(written_message)
+    self.draft_message = written_message
+  end
 
   def pluralize
     return unread_messages.length != 1 ? "s" : ""
