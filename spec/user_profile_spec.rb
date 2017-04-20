@@ -61,6 +61,7 @@ describe UserProfile do
       allow(message_class).to receive(:new).with(my_profile).and_return(message)
       allow(message).to receive(:write).with(friend_name1, message_body).and_return(message)
       allow(message).to receive(:send).and_return(elon_profile.unread_messages << message)
+      allow(message).to receive(:read)
     end
 
     it "should start with 0 new messages" do
@@ -82,11 +83,18 @@ describe UserProfile do
       expect(elon_profile.unread_messages.count).to eq(1)
     end
 
-    it "should output 0 new messages after all read" do
-      my_profile.instance_variable_set(:@unread_messages, [message])
-      allow(message).to receive(:read).and_return("test message")
-      my_profile.check_messages
-      expect{my_profile.check_messages}.to output("\n James Dix, you have 0 new messages\n").to_stdout
+    it "should reset draft message to nil" do
+      my_profile.write_message(friend_name1, message_body)
+      my_profile.send_message
+      expect(my_profile.draft_message).to eq(nil)
+    end
+
+    it "should move unread messages to read meassages after interaction" do
+      my_profile.write_message(friend_name1, message_body)
+      my_profile.send_message
+      elon_profile.check_messages
+      expect(elon_profile.unread_messages.count).to eq(0)
+      expect(elon_profile.read_messages.count).to eq(1)
     end
 
   end
