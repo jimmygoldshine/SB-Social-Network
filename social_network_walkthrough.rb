@@ -22,16 +22,17 @@ def social_network_walkthrough
   puts "\n  ***Now that there are two profiles, let's connect them! We'll switch into #{profile1.name}'s user profile and add #{profile2.name}*** \n"
   puts "\n#{profile1.name}, you would like to add a friend... what's their full name?"
   friend_name = gets.chomp
-  profile1.add_friend(friend.name)
+  profile1.add_friend(friend_name)
   puts "\nWe successfully found #{friend_name}! You are now friends - go say hi! \n"
   puts "\n  ***Let's send a message from #{profile1.name} to #{profile2.name}!*** \n\n"
   puts "To:"
   to = gets.chomp
   puts "Message:"
   message = gets.chomp
-  profile1.messsage.write(to, message)
-  profile1.message.send
-  puts "\n\n  Your message was sent to #{@to} \n\n"
+  profile1.write_message(to, message)
+  puts "  ***The message is now saved in drafts! It will stay here until you use message send. Once we hit send...***"
+  profile1.send_message
+  puts "\n\n  ***Your message was sent to #{profile2.name}*** \n\n"
   puts "\n  ***Let's switch into #{profile2.name}'s profile and check their messages!*** \n"
   profile2.check_messages
   puts "\n  ***Now that #{profile2.name} has read his unread messages these are moved from the unread messages box. When #{profile2.name} checks again:*** \n"
